@@ -9,3 +9,12 @@ services:
       POSTGRES_PASSWORD: P@ssword1!
     ports:
       - 5432:5432
+  web:
+    image: nginx
+    volumes:
+      - ./nginx:/etc/nginx/templates
+      - ./Frontend/dist:/var/www/ui-static
+    ports:
+      - '8080:80'
+    environment:
+      - NGINX_PORT=80
