@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
+import { prisma } from './db';
+
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  async getHello(): Promise<string> {
+    const user = await prisma.user.findUnique({ where: { id: 1 } });
+    return `Hello ${user.name}!`;
   }
 }
