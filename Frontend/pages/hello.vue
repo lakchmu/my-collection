@@ -1,5 +1,9 @@
 <template>
-  <div>{{ text }}</div>
+  <v-theme-provider with-background class="pa-10">
+    <v-card class="card" width="250">
+      <v-card-text>{{ text }}</v-card-text>
+    </v-card>
+  </v-theme-provider>
 </template>
 
 <script lang="ts" setup>
@@ -13,3 +17,10 @@ if(data) {
   text = data
 }
 </script>
+
+<style lang="scss">
+.card {
+  width: 250;
+  padding: 16px;
+}
+</style>
