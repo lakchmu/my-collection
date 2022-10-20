@@ -1,0 +1,45 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo "${{ secrets.SECRET }}" > "$HOME/.ssh/key"
+      - run: chmod 600 "$HOME/.ssh/key"
+      - run: yarn install
+        working-directory: ./Frontend
+      - run: yarn generate
+        working-directory: ./Frontend
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/ui
+        working-directory: ./Frontend/.output/public
+      - run: npm install
+        working-directory: ./Backend
+      - run: npm run build
+        working-directory: ./Backend
+        env:
+          NODE_ENV: develop
+      - run: cp -a ./node_modules ./dist
+        working-directory: ./Backend
+      - run: cp -a ./migrations ./dist
+        working-directory: ./Backend
+      - run: cp ./schema.prisma ./dist
+        working-directory: ./Backend
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/api
+        working-directory: ./Backend/dist
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete docker-compose.prod.yml root@45.89.66.152:/opt/www/my-collection
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete nginx root@45.89.66.152:/opt/www/my-collection
+      - run: ssh -i $HOME/.ssh/key root@45.89.66.152 "docker-compose -f /opt/www/my-collection/docker-compose.prod.yml up --build -d"

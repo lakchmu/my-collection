@@ -1,0 +1,37 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: P@ssword1!
+    ports:
+      - 5432:5432
+  web:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx/prod:/etc/nginx/templates
+      - ./ui:/var/www/my-collection/frontend
+    ports:
+      - '8080:80'
+    environment:
+      - NGINX_PORT=80
+  api:
+    image: node
+    restart: always
+    working_dir: /var/www/my-collection/api
+    command: bash -c "npx prisma migrate deploy && node main"
+    volumes:
+      - ./api:/var/www/my-collection/api
+      - ./api/node_modules:/var/www/my-collection/api/node_modules
+      - ./api/migrations:/var/www/my-collection/api/migrations
+    ports:
+      - '3001:3001'
+    environment:
+      - DATABASE_URL=postgresql://postgres:P@ssword1!@db:5432/my-collection
+      - NODE_ENV=production
