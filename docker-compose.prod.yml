@@ -5,6 +5,8 @@ services:
   db:
     image: postgres
     restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: P@ssword1!
     ports:
@@ -14,7 +16,7 @@ services:
     restart: always
     volumes:
       - ./nginx/prod:/etc/nginx/templates
-      - ./Frontend/.output/public:/var/www/my-collection/frontend
+      - ./ui:/var/www/my-collection/frontend
     ports:
       - '8080:80'
     environment:
@@ -23,10 +25,11 @@ services:
     image: node
     restart: always
     working_dir: /var/www/my-collection/api
-    command: node main
+    command: bash -c "npx prisma migrate deploy && node main"
     volumes:
-      - ./Backend/dist:/var/www/my-collection/api
-      - ./Backend/node_modules:/var/www/my-collection/api/node_modules
+      - ./api:/var/www/my-collection/api
+      - ./api/node_modules:/var/www/my-collection/api/node_modules
+      - ./api/migrations:/var/www/my-collection/api/migrations
     ports:
       - '3001:3001'
     environment:
