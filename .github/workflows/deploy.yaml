@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deploy-fe:
+  deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,11 +22,11 @@ jobs:
       - run: chmod 600 "$HOME/.ssh/key"
       - run: cd Frontend
       - run: yarn install
-      - run: nuxt generate
-      - run: cd .output/public && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/frontend
+      - run: yarn generate
+      - run: cd .output/public && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/ui
       - run: cd ../Backend
       - run: npm install
       - run: npm run build
         env:
           NODE_ENV: develop
-      - run: cd .dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/backend
+      - run: cd .dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/api
