@@ -20,13 +20,17 @@ jobs:
       - run: mkdir "$HOME/.ssh"
       - run: echo "${{ secrets.SECRET }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
-      - run: cd Frontend
       - run: yarn install
+        working-directory: ./Frontend
       - run: yarn generate
-      - run: cd .output/public && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/ui
-      - run: cd ../Backend
+        working-directory: ./Frontend
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/ui
+        working-directory: ./Frontend/.output/public
       - run: npm install
+        working-directory: ./Backend
       - run: npm run build
+        working-directory: ./Backend
         env:
           NODE_ENV: develop
-      - run: cd .dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/api
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/api
+        working-directory: ./Backend/dist
