@@ -8,7 +8,7 @@ $ docker-compose up
 
 ## Prod Setup
 ```bash
-$ docker-compose -f docker-compose.prod.yml up --build
+$ docker-compose -f docker-compose.prod.yml up --build -d
 ```
 
 ## Url

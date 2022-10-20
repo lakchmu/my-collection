@@ -1,7 +1,7 @@
 name: Deploy
 
 on:
-  pull_request:
+  push:
     branches:
       - master
 
@@ -42,3 +42,4 @@ jobs:
         working-directory: ./Backend/dist
       - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete docker-compose.prod.yml root@45.89.66.152:/opt/www/my-collection
       - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete nginx root@45.89.66.152:/opt/www/my-collection
+      - run: ssh -i $HOME/.ssh/key root@45.89.66.152 "docker-compose -f /opt/www/my-collection/docker-compose.prod.yml up --build -d"
