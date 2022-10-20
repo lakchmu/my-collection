@@ -1,8 +1,6 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  server: {
-    host: 'localhost',
-  },
+  target: 'static',
   ssr: false,
   css: ['vuetify/lib/styles/main.sass'],
   build: {
@@ -12,5 +10,8 @@ export default defineNuxtConfig({
       define: {
           'process.env.DEBUG': 'false',
       }
+  },
+  generate: {
+    fallback: '404.html',
   },
 });

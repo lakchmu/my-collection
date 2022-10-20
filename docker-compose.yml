@@ -12,7 +12,7 @@ services:
   web:
     image: nginx
     volumes:
-      - ./nginx:/etc/nginx/templates
+      - ./nginx/default:/etc/nginx/templates
       - ./Frontend/dist:/var/www/ui-static
     ports:
       - '8080:80'
