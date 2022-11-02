@@ -32,6 +32,8 @@ jobs:
         working-directory: ./Backend
         env:
           NODE_ENV: develop
+          SECRETKEY: real-long-secret
+          EXPIRESIN: "60 days"
       - run: cp -a ./node_modules ./dist
         working-directory: ./Backend
       - run: cp -a ./migrations ./dist
