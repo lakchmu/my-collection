@@ -8,13 +8,23 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import tokenService from '@/utils/token-service';
+
+definePageMeta({
+  middleware: 'auth',
+});
 
 let text = ref<any>('Init text');
 
-const { data } = await useFetch('/api/test');
+const { data } = await useFetch('/api/test', {
+  method: 'get',
+  headers: {
+    Authorization: `bearer ${tokenService.getUserToken()}`,
+  },
+});
 
-if(data) {
-  text = data
+if (data) {
+  text = data;
 }
 </script>
 

@@ -8,7 +8,8 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.12"
+    "nuxt": "3.0.0-rc.12",
+    "@nuxtjs/router": "^1.7.0"
   },
   "dependencies": {
     "@nuxtjs/eslint-config-typescript": "^11.0.0",
@@ -18,9 +19,10 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-vue": "^9.6.0",
-    "prettier": "^2.7.1",
     "pinia": "^2.0.23",
+    "prettier": "^2.7.1",
     "sass": "^1.55.0",
+    "vue-router": "^4.1.6",
     "vuetify": "^3.0.0-beta.13"
   }
 }
