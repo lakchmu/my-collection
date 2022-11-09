@@ -54,9 +54,7 @@ const emailRules = [
   (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
 ];
 
-const passwordRules = [
-  (v: string) => !!v || 'Password is required',
-];
+const passwordRules = [(v: string) => !!v || 'Password is required'];
 
 const router = useRouter();
 const authStore = useAuthStore();

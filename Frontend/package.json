@@ -8,8 +8,9 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.12",
-    "@nuxtjs/router": "^1.7.0"
+    "@mdi/font": "^7.0.96",
+    "@nuxtjs/router": "^1.7.0",
+    "nuxt": "3.0.0-rc.12"
   },
   "dependencies": {
     "@nuxtjs/eslint-config-typescript": "^11.0.0",
