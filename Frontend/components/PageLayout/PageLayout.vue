@@ -51,6 +51,13 @@ const links = [
       prependIcon: 'mdi:mdi-forum',
     },
   },
+  {
+    title: 'Add New Collection',
+    value: '/add-new-collection',
+    props: {
+      prependIcon: 'mdi:mdi-forum',
+    },
+  },
 ];
 
 interface SelectedProps {
