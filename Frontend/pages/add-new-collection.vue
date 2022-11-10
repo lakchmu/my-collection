@@ -13,9 +13,10 @@
             required
           />
 
-          <v-text-field
+          <v-select
             variant="solo"
             v-model="fields.year"
+            :items="years"
             :rules="[(v) => !!v || 'Year is required']"
             label="Year"
             required
@@ -61,21 +62,28 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { range } from 'lodash';
 
-import { CollectionModel } from '@/types';
+import { useCollectionStore } from '@/stores';
+import { Brand, Type, Status } from '@/types';
 
-const brands = ['kinder', 'other'];
-const types = ['simple', 'difficult'];
-const statuses = ['inCollection', 'inProgress', 'inWishList'];
+import type { CollectionModel } from '@/types';
+
+const collectionStore = useCollectionStore();
+
+const brands = Object.values(Brand);
+const types = Object.values(Type);
+const statuses = Object.values(Status);
+const years = range(1950, new Date().getFullYear(), 1);
 
 const form = ref(null);
 const valid = ref<boolean>(false);
 const fields = ref<CollectionModel>({} as CollectionModel);
 
-const onSubmit = () => {
+const onSubmit = async () => {
   if (!form.value.validate()) return;
 
-  console.log(fields);
+  await collectionStore.create(fields.value);
 };
 </script>
 
