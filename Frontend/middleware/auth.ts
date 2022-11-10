@@ -1,5 +1,7 @@
 import tokenService from '@/utils/token-service';
 
 export default defineNuxtRouteMiddleware(() => {
-  if (!tokenService.getAuthStatus()) navigateTo('/login');
+  if (!tokenService.getAuthStatus()) {
+    return navigateTo({ path: '/login' });
+  }
 });

@@ -35,24 +35,20 @@
             variant="solo"
             v-model="fields.brand"
             :items="brands"
-            :rules="[(v) => !!v || 'Brand is required']"
             label="Brand"
-            required
           />
 
           <v-select
             variant="solo"
             v-model="fields.status"
             :items="statuses"
-            :rules="[(v) => !!v || 'Status is required']"
             label="Status"
-            required
           />
 
           <v-checkbox v-model="fields.showOnHome" label="Show on Home Page?" />
 
           <v-btn color="primary" class="mr-4" @click="onSubmit">
-            Validate
+            Create
           </v-btn>
         </v-col>
       </v-row>
@@ -69,6 +65,8 @@ import { Brand, Type, Status } from '@/types';
 
 import type { CollectionModel } from '@/types';
 
+definePageMeta({ middleware: 'auth' });
+
 const collectionStore = useCollectionStore();
 
 const brands = Object.values(Brand);
@@ -78,13 +76,21 @@ const years = range(1950, new Date().getFullYear(), 1);
 
 const form = ref(null);
 const valid = ref<boolean>(false);
-const fields = ref<CollectionModel>({} as CollectionModel);
+const fields = ref<CollectionModel>({
+  showOnHome: false,
+  brand: Brand.KINDER,
+  status: Status.EMPTY,
+} as CollectionModel);
 
 const onSubmit = async () => {
   if (!form.value.validate()) return;
 
   await collectionStore.create(fields.value);
+
+  if (!collectionStore.errorMessage) {
+    form.value.reset();
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped />

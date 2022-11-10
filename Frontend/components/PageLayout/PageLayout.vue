@@ -52,10 +52,10 @@ const links = [
     },
   },
   {
-    title: 'Add New Collection',
+    title: 'New Collection',
     value: '/add-new-collection',
     props: {
-      prependIcon: 'mdi:mdi-forum',
+      prependIcon: 'mdi:mdi-plus-thick',
     },
   },
 ];

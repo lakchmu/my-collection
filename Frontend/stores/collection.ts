@@ -6,7 +6,7 @@ import type { CollectionModel } from '@/types';
 
 export const useCollectionStore = defineStore('collection', {
   state: () => {
-    return { list: [], errorMessage: '' };
+    return { list: [], errorMessage: null };
   },
 
   actions: {
@@ -14,7 +14,7 @@ export const useCollectionStore = defineStore('collection', {
       try {
         await collectionService.create(fields);
 
-        this.errorMessage = '';
+        this.errorMessage = null;
       } catch (error) {
         this.errorMessage = 'Data is incorrect. Try again';
       }
