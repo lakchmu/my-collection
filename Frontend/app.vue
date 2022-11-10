@@ -11,11 +11,12 @@
 import { ref, watch } from 'vue';
 
 import { PageLayout } from '@/components';
+import tokenService from '@/utils/token-service';
 
 const route = useRoute();
-const isLoginPage = ref<boolean>(route.path === '/login');
+const isLoginPage = ref<boolean>(tokenService.getAuthStatus());
 
 watch(route, () => {
-  isLoginPage.value = route.path === '/login';
+  isLoginPage.value = tokenService.getAuthStatus();
 });
 </script>
