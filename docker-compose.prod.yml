@@ -18,7 +18,7 @@ services:
       - ./nginx/prod:/etc/nginx/templates
       - ./ui:/var/www/my-collection/frontend
     ports:
-      - '8080:80'
+      - '80:80'
     environment:
       - NGINX_PORT=80
   api:

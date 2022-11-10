@@ -4,14 +4,15 @@ export default defineNuxtConfig({
   ssr: false,
   css: ['vuetify/lib/styles/main.sass'],
   build: {
-      transpile: ['vuetify']
+    transpile: ['vuetify'],
   },
   vite: {
-      define: {
-          'process.env.DEBUG': 'false',
-      }
+    define: {
+      'process.env.DEBUG': 'false',
+    },
   },
   generate: {
+    routes: ['/'],
     fallback: '404.html',
   },
   buildModules: ['@pinia/nuxt'],

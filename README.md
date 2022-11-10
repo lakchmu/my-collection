@@ -20,3 +20,8 @@ http://localhost:8080/
 ```bash
 $ npx prisma migrate dev --name my-collection init
 ```
+
+## Links
+
+- [Routing and Route Auth in Nuxt](https://techformist.com/routing-auth-nuxt/)
+- [Auth Middleware life example](https://stackblitz.com/edit/nuxt-starter-eqwqp8?file=pages%2Fsecret.vue)

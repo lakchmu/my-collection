@@ -19,7 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prisma": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "prisma:format": "prisma format",
+    "prisma:migrate": "npx prisma migrate dev --name my-collection"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

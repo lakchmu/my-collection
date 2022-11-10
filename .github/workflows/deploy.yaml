@@ -32,14 +32,13 @@ jobs:
         working-directory: ./Backend
         env:
           NODE_ENV: develop
-          SECRETKEY: real-long-secret
-          EXPIRESIN: "60 days"
       - run: cp -a ./node_modules ./dist
         working-directory: ./Backend
       - run: cp -a ./migrations ./dist
         working-directory: ./Backend
       - run: cp ./schema.prisma ./dist
         working-directory: ./Backend
+      - run: echo "${{ secrets.BE_ENV }}" > ./dist/.env
       - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@45.89.66.152:/opt/www/my-collection/api
         working-directory: ./Backend/dist
       - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete docker-compose.prod.yml root@45.89.66.152:/opt/www/my-collection
