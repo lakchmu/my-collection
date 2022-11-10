@@ -4,7 +4,7 @@ const USER_TOKEN = 'userToken';
 const storageProvider = localStorage;
 
 const tokenService = {
-  getAuthStatus(): boolean {
+  isUserAuthenticated(): boolean {
     return storageProvider.getItem(IS_AUTHENTICATED) === 'true';
   },
 

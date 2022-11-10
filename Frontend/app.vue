@@ -14,9 +14,9 @@ import { PageLayout } from '@/components';
 import tokenService from '@/utils/token-service';
 
 const route = useRoute();
-const isLoginPage = ref<boolean>(tokenService.getAuthStatus());
+const isLoginPage = ref<boolean>(!tokenService.isUserAuthenticated());
 
 watch(route, () => {
-  isLoginPage.value = tokenService.getAuthStatus();
+  isLoginPage.value = !tokenService.isUserAuthenticated();
 });
 </script>
