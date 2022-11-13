@@ -17,6 +17,7 @@ model Collection {
   id                 Int                  @id @default(autoincrement())
   name               String               @unique
   year               Int
+  files              String[]
   brand              Brand                @default(KINDER)
   type               Type                 @default(DIFFICULT)
   status             Status               @default(EMPTY)

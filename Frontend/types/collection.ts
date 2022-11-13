@@ -5,6 +5,7 @@ export interface CollectionModel {
   type: Type;
   status: Status;
   showOnHome: boolean;
+  files?: File[];
 }
 
 export enum Brand {

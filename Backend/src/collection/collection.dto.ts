@@ -23,4 +23,7 @@ export class CreateCollectionDto {
 
   @ApiProperty({ default: false })
   readonly showOnHome: boolean;
+
+  @ApiProperty()
+  readonly files: string[];
 }

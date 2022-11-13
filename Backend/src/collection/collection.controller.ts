@@ -1,6 +1,15 @@
-import { Controller, UseGuards, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Body,
+  UseInterceptors,
+  UploadedFiles,
+} from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Collection } from '@prisma/client';
+import { diskStorage } from 'multer';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -14,8 +23,14 @@ export class CollectionController {
 
   @UseGuards(JwtAuthGuard)
   @ApiSecurity('access-key')
+  @UseInterceptors(
+    FilesInterceptor('files'),
+  )
   @Post('/')
-  async create(@Body() createCollectionDto: CreateCollectionDto): Promise<Collection> {
-    return this.collectionService.create(createCollectionDto);
+  async create(
+    @Body() createCollectionDto: CreateCollectionDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ): Promise<any> {
+    return this.collectionService.create(createCollectionDto, files);
   }
 }

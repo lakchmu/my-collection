@@ -12,7 +12,15 @@ export const useCollectionStore = defineStore('collection', {
   actions: {
     async create(fields: CollectionModel) {
       try {
-        await collectionService.create(fields);
+        const formData = new FormData();
+
+        Object.keys(fields).forEach((key: string) => {
+          key === 'files'
+            ? fields[key].forEach((file) => formData.append(key, file))
+            : formData.append(key, fields[key]);
+        });
+
+        await collectionService.create(formData);
 
         this.errorMessage = null;
       } catch (error) {

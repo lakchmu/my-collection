@@ -7,7 +7,6 @@
           <v-text-field
             variant="solo"
             v-model="fields.name"
-            :counter="10"
             :rules="[(v) => !!v || 'Name is required']"
             label="Name"
             required
@@ -45,11 +44,17 @@
             label="Status"
           />
 
+          <v-file-input
+            v-model="fields.files"
+            variant="solo"
+            label="File input"
+            prepend-icon="mdi-camera"
+            multiple
+          />
+
           <v-checkbox v-model="fields.showOnHome" label="Show on Home Page?" />
 
-          <v-btn color="primary" class="mr-4" @click="onSubmit">
-            Create
-          </v-btn>
+          <v-btn color="primary" class="mr-4" @click="onSubmit"> Create </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -72,15 +77,16 @@ const collectionStore = useCollectionStore();
 const brands = Object.values(Brand);
 const types = Object.values(Type);
 const statuses = Object.values(Status);
-const years = range(1950, new Date().getFullYear(), 1);
+const years = range(new Date().getFullYear(), 1950, 1);
 
 const form = ref(null);
 const valid = ref<boolean>(false);
-const fields = ref<CollectionModel>({
+const fieldsInitValue = {
   showOnHome: false,
   brand: Brand.KINDER,
   status: Status.EMPTY,
-} as CollectionModel);
+} as CollectionModel;
+const fields = ref<CollectionModel>(fieldsInitValue);
 
 const onSubmit = async () => {
   if (!form.value.validate()) return;
@@ -91,6 +97,7 @@ const onSubmit = async () => {
     form.value.reset();
   }
 };
+
 </script>
 
 <style scoped />
