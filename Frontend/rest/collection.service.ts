@@ -3,7 +3,7 @@ import { CollectionModel } from '@/types';
 import BaseService from './base.service';
 
 class CollectionService extends BaseService {
-  create(payload: CollectionModel) {
+  create(payload: FormData) {
     return this.post('/api/collection', payload);
   }
 }

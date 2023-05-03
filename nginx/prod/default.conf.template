@@ -21,6 +21,10 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
+    location /uploads {
+        root /var/www/my-collection;
+    }
+
     location / {
         root /var/www/my-collection/frontend;
         try_files $uri $uri/ index.html;

@@ -17,6 +17,7 @@ services:
     volumes:
       - ./nginx/prod:/etc/nginx/templates
       - ./ui:/var/www/my-collection/frontend
+      - ./uploads:/var/www/my-collection/uploads
     ports:
       - '80:80'
     environment:
