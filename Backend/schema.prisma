@@ -4,27 +4,41 @@ datasource db {
 }
 
 model User {
-  id                 Int                  @id @default(autoincrement())
-  email              String               @unique
-  name               String?
-  password           String
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  collections        UsersOnCollections[]
+  id          Int                  @id @default(autoincrement())
+  email       String               @unique
+  name        String?
+  password    String
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @default(now())
+  collections UsersOnCollections[]
+  products    UsersOnProducts[]
 }
 
 model Collection {
-  id                 Int                  @id @default(autoincrement())
-  name               String               @unique
-  year               Int
-  files              String[]
-  brand              Brand                @default(KINDER)
-  type               Type                 @default(DIFFICULT)
-  status             Status               @default(EMPTY)
-  showOnHome         Boolean
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  users              UsersOnCollections[]
+  id          Int                  @id @default(autoincrement())
+  name        String               @unique
+  year        Int
+  files       String[]
+  brand       Brand                @default(KINDER)
+  type        Type                 @default(DIFFICULT)
+  status      Status               @default(EMPTY)
+  showOnHome  Boolean
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @default(now())
+  users       UsersOnCollections[]
+}
+
+model Product {
+  id          Int                  @id @default(autoincrement())
+  name        String               @unique
+  unit        Unit
+  amount      Int                  @default(0)
+  limit       Int
+  barcode     String?
+  files       String[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @default(now())
+  users       UsersOnProducts[]
 }
 
 model UsersOnCollections {
@@ -36,6 +50,17 @@ model UsersOnCollections {
   assignedBy   String
 
   @@id([userId, collectionId])
+}
+
+model UsersOnProducts {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([userId, productId])
 }
 
 generator client {
@@ -58,4 +83,9 @@ enum Status {
   IN_PROGRESS
   IN_WISH_LIST
   EMPTY
+}
+
+enum Unit {
+  PIECE
+  GRAM
 }
