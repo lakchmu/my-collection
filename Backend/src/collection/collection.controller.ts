@@ -8,8 +8,6 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { Collection } from '@prisma/client';
-import { diskStorage } from 'multer';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 

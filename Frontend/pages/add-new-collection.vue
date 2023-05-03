@@ -65,7 +65,7 @@
 import { ref } from 'vue';
 import { range } from 'lodash';
 
-import { useCollectionStore } from '@/stores';
+import { useCollectionStore, useNotificationStore } from '@/stores';
 import { Brand, Type, Status } from '@/types';
 
 import type { CollectionModel } from '@/types';
@@ -73,11 +73,12 @@ import type { CollectionModel } from '@/types';
 definePageMeta({ middleware: 'auth' });
 
 const collectionStore = useCollectionStore();
+const notificationStore = useNotificationStore();
 
 const brands = Object.values(Brand);
 const types = Object.values(Type);
 const statuses = Object.values(Status);
-const years = range(new Date().getFullYear(), 1950, 1);
+const years = range(new Date().getFullYear(), 1950, -1);
 
 const form = ref(null);
 const valid = ref<boolean>(false);
@@ -94,6 +95,7 @@ const onSubmit = async () => {
   await collectionStore.create(fields.value);
 
   if (!collectionStore.errorMessage) {
+    notificationStore.set('Collection was created successfully');
     form.value.reset();
   }
 };

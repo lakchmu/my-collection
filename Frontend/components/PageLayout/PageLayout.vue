@@ -27,14 +27,34 @@
     <span>lakchmu@gmail.com&nbsp</span>
     <span>2022</span>
   </v-footer>
+
+  <v-snackbar
+    v-model="snackbar"
+  >
+    {{ notificationStore.text }}
+
+    <template v-slot:actions>
+      <v-btn
+        color="pink"
+        variant="text"
+        @click="notificationStore.reset()"
+      >
+        Close
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script setup lang="ts">
+import { useNotificationStore } from '~~/stores';
+
 const route = useRoute()
 const router = useRouter();
+const notificationStore = useNotificationStore();
 
 const drawer = ref<boolean>(true);
 const selectedLink = ref<string[]>([route.path]);
+const snackbar = ref<boolean>(true);
 
 const links = [
   {
